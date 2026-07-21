@@ -86,6 +86,28 @@
                     </select>
                 </div>
 
+                <!-- Month Selection -->
+                <div class="form-group">
+                    <label>
+                        <i class="fa-solid fa-calendar-days text-emerald"></i> סינון לפי חודשי תצפית (ניתן לבחור כמה)
+                    </label>
+                    <div class="months-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 6px;">
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="1"> ינואר</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="2"> פברואר</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="3"> מרץ</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="4"> אפריל</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="5"> מאי</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="6"> יוני</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="7"> יולי</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="8"> אוגוסט</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="9"> ספטמבר</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="10"> אוקטובר</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="11"> נובמבר</label>
+                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9em;"><input type="checkbox" name="month" value="12"> דצמבר</label>
+                    </div>
+                    <span class="input-hint">אם לא מסומן אף חודש — החידון יכלול תצפיות מכל השנה.</span>
+                </div>
+
                 <!-- Start Button -->
                 <button type="submit" id="start-btn" class="btn btn-primary">
                     <i class="fa-solid fa-play"></i>
