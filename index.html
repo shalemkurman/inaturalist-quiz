@@ -3,176 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חידון זיהוי טבע - iNaturalist Quiz</title>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <title>חידון זיהוי מינים מהטבע | iNaturalist Quiz</title>
+
+    <!-- Open Graph / WhatsApp Preview Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-username.github.io/your-repo/" />
+    <meta property="og:title" content="חידון זיהוי מינים מהטבע | iNaturalist Quiz" />
+    <meta property="og:description" content="בחן את עצמך! כמה טוב אתה מכיר את בעלי החיים והצמחים באזור שלך?" />
+    <meta property="og:image" content="https://your-username.github.io/your-repo/og-image.jpg" />
+
+    <!-- Twitter / X Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="חידון זיהוי מינים מהטבע | iNaturalist Quiz" />
+    <meta name="twitter:description" content="בחן את עצמך! כמה טוב אתה מכיר את בעלי החיים והצמחים באזור שלך?" />
+    <meta name="twitter:image" content="https://your-username.github.io/your-repo/og-image.jpg" />
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-content">
-            <div class="logo">
-                <i class="fa-solid fa-leaf text-emerald"></i>
-                <h1>חידון זיהוי טבע</h1>
-            </div>
-            <div id="quiz-badge" class="badge">iNaturalist API</div>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="container">
-
-        <!-- SCREEN 1: SETUP -->
-        <section id="setup-screen" class="card setup-card">
-            <div class="card-header">
-                <h2>הגדרת החידון</h2>
-                <p>חפש קבוצת יצורים (טקסון) ומיקום ב-iNaturalist כדי ליצור חידון מותאם אישית</p>
-            </div>
+    <div class="container">
+        
+        <!-- ========================================== -->
+        <!-- SCREEN 1: SETUP FORM                       -->
+        <!-- ========================================== -->
+        <section id="setup-screen" class="card">
+            <h1>חידון זיהוי מינים מהטבע</h1>
+            <p class="subtitle">הזן קבוצה ומיקום כדי ליצור חידון מותאם אישית מנתוני iNaturalist</p>
 
             <form id="setup-form">
                 
-                <!-- Taxon Search Autocomplete -->
-                <div class="form-group relative">
-                    <label for="taxon-input">
-                        <i class="fa-solid fa-spider text-emerald"></i> חיפוש קבוצה / טקסון (Taxon)
-                    </label>
-                    <div class="input-wrapper">
-                        <input type="text" id="taxon-input" autocomplete="off" 
-                               placeholder="הקלד שם קבוצה (למשל: פרפרים, ציפורים, Papilio, Aves...)" 
-                               value="פרפרים ועשים (Lepidoptera)">
-                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                    </div>
-                    <input type="hidden" id="taxon-id" value="47157"> <!-- Default: Lepidoptera -->
-                    
-                    <!-- Autocomplete Dropdown for Taxon -->
+                <!-- Taxon Search -->
+                <div class="form-group">
+                    <label for="taxon-input">קבוצה / מין:</label>
+                    <input type="text" id="taxon-input" placeholder="הקלד קבוצה או מין (למשל: פרפרים, צמחים, זוחלים)..." autocomplete="off" />
+                    <input type="hidden" id="taxon-id" value="" />
                     <div id="taxon-results" class="autocomplete-dropdown hidden"></div>
-                    <span class="input-hint">ברירת מחדל: פרפרים ועשים (Lepidoptera - ID: 47157)</span>
                 </div>
 
-                <!-- Location Search Autocomplete -->
-                <div class="form-group relative">
-                    <label for="place-input">
-                        <i class="fa-solid fa-location-dot text-emerald"></i> חיפוש מיקום / אזור (Location)
-                    </label>
-                    <div class="input-wrapper">
-                        <input type="text" id="place-input" autocomplete="off" 
-                               placeholder="הקלד מדינה או אזור (למשל: Israel, California, החולה...)" 
-                               value="ישראל (Israel)">
-                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                    </div>
-                    <input type="hidden" id="place-id" value="6803"> <!-- Default: Israel -->
-                    
-                    <!-- Autocomplete Dropdown for Place -->
+                <!-- Location Search -->
+                <div class="form-group">
+                    <label for="place-input">אזור / מיקום:</label>
+                    <input type="text" id="place-input" placeholder="הקלד מיקום (למשל: ישראל, גליל עליון)..." autocomplete="off" />
+                    <input type="hidden" id="place-id" value="" />
                     <div id="place-results" class="autocomplete-dropdown hidden"></div>
-                    <span class="input-hint">ברירת מחדל: ישראל (Place ID: 6803)</span>
                 </div>
 
                 <!-- Language Selection -->
                 <div class="form-group">
-                    <label for="lang-select">
-                        <i class="fa-solid fa-language text-emerald"></i> שפת שמות עממיים
-                    </label>
-                    <select id="lang-select" class="custom-select">
-                        <option value="he" selected>עברית (Hebrew)</option>
+                    <label for="lang-select">שפת שמות המינים:</label>
+                    <select id="lang-select">
+                        <option value="he" selected>עברית</option>
                         <option value="en">אנגלית (English)</option>
-                        <option value="es">ספרדית (Spanish)</option>
-                        <option value="fr">צרפתית (French)</option>
-                        <option value="de">גרמנית (German)</option>
-                        <option value="ar">ערבית (Arabic)</option>
-                        <option value="ru">רוסית (Russian)</option>
                     </select>
                 </div>
 
-                <!-- Start Button -->
-                <button type="submit" id="start-btn" class="btn btn-primary">
-                    <i class="fa-solid fa-play"></i>
-                    <span>התחל חידון (20 שאלות)</span>
-                </button>
+                <button type="submit" id="start-btn" class="primary-btn">התחל חידון</button>
             </form>
 
-            <!-- Loading Indicator -->
-            <div id="loading-spinner" class="loading-box hidden">
+            <div id="loading-spinner" class="spinner-container hidden">
                 <div class="spinner"></div>
-                <p id="loading-status">מוריד את רשימת המינים מ-iNaturalist...</p>
+                <p id="loading-status">טוען נתונים מ-iNaturalist...</p>
             </div>
         </section>
 
-
-        <!-- SCREEN 2: QUIZ -->
-        <section id="quiz-screen" class="card quiz-card hidden">
-            <!-- Progress Header -->
-            <div class="quiz-progress-bar-container">
-                <div class="progress-text">
-                    שאלה <span id="q-current">1</span> / <span id="q-total">20</span>
+        <!-- ========================================== -->
+        <!-- SCREEN 2: QUIZ                             -->
+        <!-- ========================================== -->
+        <section id="quiz-screen" class="card hidden">
+            <div class="quiz-header">
+                <div class="quiz-stats">
+                    <span>שאלה <span id="q-current">1</span> מתוך 20</span>
+                    <span>ניקוד: <span id="score-count">0</span></span>
                 </div>
-                <div class="progress-track">
-                    <div id="progress-bar" class="progress-fill"></div>
-                </div>
-                <div class="score-text">
-                    ניקוד: <span id="score-count">0</span>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar-fill"></div>
                 </div>
             </div>
 
-            <!-- Image Viewport -->
-            <div class="image-card">
-                <div class="image-wrapper">
-                    <img id="quiz-image" src="" alt="תמונת זיהוי">
-                    <div id="image-loader" class="image-spinner-overlay">
-                        <div class="spinner"></div>
-                    </div>
-                </div>
-                <div class="photo-credit-bar">
-                    <span>קרדיט: <strong id="photographer-name">-</strong></span>
-                    <a id="inat-link" href="#" target="_blank" class="inat-link">
-                        צפה ב-iNaturalist <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
+            <div class="image-container">
+                <div id="image-loader" class="image-loader-spinner"></div>
+                <img id="quiz-image" src="" alt="תמונת המין לזיהוי" />
+                <div class="photo-credits">
+                    <span>צילום: <strong id="photographer-name">-</strong></span>
+                    <a id="inat-link" href="#" target="_blank" rel="noopener noreferrer">עמוד iNaturalist</a>
                 </div>
             </div>
 
-            <!-- Options Grid -->
             <div id="options-container" class="options-grid"></div>
 
-            <!-- Next Button -->
-            <div id="next-container" class="next-wrapper hidden">
-                <button id="next-btn" class="btn btn-emerald">
-                    <span>לשאלה הבאה</span>
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
+            <div id="next-container" class="next-container hidden">
+                <button id="next-btn" class="primary-btn">לשאלה הבאה &larr;</button>
             </div>
         </section>
 
-
-        <!-- SCREEN 3: RESULTS -->
-        <section id="results-screen" class="card results-card hidden">
-            <div class="trophy-icon">
-                <i class="fa-solid fa-trophy"></i>
+        <!-- ========================================== -->
+        <!-- SCREEN 3: RESULTS                          -->
+        <!-- ========================================== -->
+        <section id="results-screen" class="card hidden">
+            <h2>החידון הסתיים!</h2>
+            <div class="score-display">
+                תשובות נכונות: <span id="final-score">0</span> / 20
             </div>
-            <h2>כל הכבוד! סיימת את החידון</h2>
-            
-            <div class="score-box">
-                <span class="score-label">הניקוד הסופי שלך:</span>
-                <div class="final-score"><span id="final-score">0</span> / 20</div>
-                <p id="performance-feedback" class="feedback-text"></p>
-            </div>
+            <p id="performance-feedback" class="feedback-text"></p>
 
             <div class="results-actions">
-                <button id="restart-same-btn" class="btn btn-primary">
-                    <i class="fa-solid fa-rotate-right"></i>
-                    <span>משחק חדש באותן הגדרות</span>
-                </button>
-                <button id="change-settings-btn" class="btn btn-secondary">
-                    <i class="fa-solid fa-sliders"></i>
-                    <span>שינוי הגדרות</span>
-                </button>
+                <button id="restart-same-btn" class="primary-btn">משחק חדש באותן הגדרות</button>
+                <button id="change-settings-btn" class="secondary-btn">שינוי נושא / מיקום</button>
             </div>
         </section>
 
-    </main>
+    </div>
 
-    <!-- Script -->
-    <script src="script.js"></script>
 </body>
 </html>
