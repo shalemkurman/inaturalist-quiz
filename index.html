@@ -3,79 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חידון זיהוי מינים מהטבע | iNaturalist Quiz</title>
-
-    <!-- Open Graph / WhatsApp Preview Tags -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://your-username.github.io/your-repo/" />
-    <meta property="og:title" content="חידון זיהוי מינים מהטבע | iNaturalist Quiz" />
-    <meta property="og:description" content="בחן את עצמך! כמה טוב אתה מכיר את בעלי החיים והצמחים באזור שלך?" />
-    <meta property="og:image" content="https://your-username.github.io/your-repo/og-image.jpg" />
-
-    <!-- Twitter / X Card Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="חידון זיהוי מינים מהטבע | iNaturalist Quiz" />
-    <meta name="twitter:description" content="בחן את עצמך! כמה טוב אתה מכיר את בעלי החיים והצמחים באזור שלך?" />
-    <meta name="twitter:image" content="https://your-username.github.io/your-repo/og-image.jpg" />
-
+    <title>חידון זיהוי</title>
+    <!-- קישור לקובץ העיצוב -->
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
 </head>
 <body>
 
     <div class="container">
-        
-        <!-- ========================================== -->
-        <!-- SCREEN 1: SETUP FORM                       -->
-        <!-- ========================================== -->
-        <section id="setup-screen" class="card">
-            <h1>חידון זיהוי מינים מהטבע</h1>
-            <p class="subtitle">הזן קבוצה ומיקום כדי ליצור חידון מותאם אישית מנתוני iNaturalist</p>
+        <!-- מסך 1: הגדרת החיפוש והתחלה -->
+        <div id="setup-screen" class="card">
+            <h1>חידון זיהוי</h1>
+            <p class="subtitle">הקלד בשורת החיפוש כדי לבחור קבוצה או זן להתחלת החידון</p>
 
             <form id="setup-form">
-                
-                <!-- Taxon Search -->
                 <div class="form-group">
-                    <label for="taxon-input">קבוצה / מין:</label>
-                    <input type="text" id="taxon-input" placeholder="הקלד קבוצה או מין (למשל: פרפרים, צמחים, זוחלים)..." autocomplete="off" />
-                    <input type="hidden" id="taxon-id" value="" />
-                    <div id="taxon-results" class="autocomplete-dropdown hidden"></div>
+                    <label for="species-search">חפש קבוצה / זן:</label>
+                    <input type="text" id="species-search" placeholder="התחל להקליד..." autocomplete="off">
+                    <div id="autocomplete-list" class="autocomplete-dropdown hidden"></div>
                 </div>
 
-                <!-- Location Search -->
-                <div class="form-group">
-                    <label for="place-input">אזור / מיקום:</label>
-                    <input type="text" id="place-input" placeholder="הקלד מיקום (למשל: ישראל, גליל עליון)..." autocomplete="off" />
-                    <input type="hidden" id="place-id" value="" />
-                    <div id="place-results" class="autocomplete-dropdown hidden"></div>
-                </div>
-
-                <!-- Language Selection -->
-                <div class="form-group">
-                    <label for="lang-select">שפת שמות המינים:</label>
-                    <select id="lang-select">
-                        <option value="he" selected>עברית</option>
-                        <option value="en">אנגלית (English)</option>
-                    </select>
-                </div>
-
-                <button type="submit" id="start-btn" class="primary-btn">התחל חידון</button>
+                <button type="submit" class="primary-btn">התחל חידון</button>
             </form>
+        </div>
 
-            <div id="loading-spinner" class="spinner-container hidden">
-                <div class="spinner"></div>
-                <p id="loading-status">טוען נתונים מ-iNaturalist...</p>
-            </div>
-        </section>
-
-        <!-- ========================================== -->
-        <!-- SCREEN 2: QUIZ                             -->
-        <!-- ========================================== -->
-        <section id="quiz-screen" class="card hidden">
+        <!-- מסך 2: מסך השאלון (מוסתר בהתחלה) -->
+        <div id="quiz-screen" class="card hidden">
             <div class="quiz-header">
                 <div class="quiz-stats">
-                    <span>שאלה <span id="q-current">1</span> מתוך 20</span>
-                    <span>ניקוד: <span id="score-count">0</span></span>
+                    <span id="question-counter">שאלה 1 מתוך 10</span>
+                    <span id="score-counter">ניקוד: 0</span>
                 </div>
                 <div class="progress-bar-container">
                     <div id="progress-bar" class="progress-bar-fill"></div>
@@ -83,38 +39,27 @@
             </div>
 
             <div class="image-container">
-                <div id="image-loader" class="image-loader-spinner"></div>
-                <img id="quiz-image" src="" alt="תמונת המין לזיהוי" />
-                <div class="photo-credits">
-                    <span>צילום: <strong id="photographer-name">-</strong></span>
-                    <a id="inat-link" href="#" target="_blank" rel="noopener noreferrer">עמוד iNaturalist</a>
-                </div>
+                <img id="quiz-image" src="" alt="תמונת זיהוי">
+                <div id="photo-credits" class="photo-credits">צילום: -</div>
             </div>
 
-            <div id="options-container" class="options-grid"></div>
-
-            <div id="next-container" class="next-container hidden">
-                <button id="next-btn" class="primary-btn">לשאלה הבאה &larr;</button>
+            <div id="options-container" class="options-grid">
+                <!-- כפתורי התשובות יטענו לכאן דינמית מ-JS -->
             </div>
-        </section>
 
-        <!-- ========================================== -->
-        <!-- SCREEN 3: RESULTS                          -->
-        <!-- ========================================== -->
-        <section id="results-screen" class="card hidden">
+            <button id="next-btn" class="primary-btn hidden">שאלה הבאה</button>
+        </div>
+
+        <!-- מסך 3: מסך תוצאות סיכום (מוסתר בהתחלה) -->
+        <div id="results-screen" class="card hidden">
             <h2>החידון הסתיים!</h2>
-            <div class="score-display">
-                תשובות נכונות: <span id="final-score">0</span> / 20
-            </div>
-            <p id="performance-feedback" class="feedback-text"></p>
-
-            <div class="results-actions">
-                <button id="restart-same-btn" class="primary-btn">משחק חדש באותן הגדרות</button>
-                <button id="change-settings-btn" class="secondary-btn">שינוי נושא / מיקום</button>
-            </div>
-        </section>
-
+            <div id="final-score" class="score-display">הציון שלך: 0 מתוך 10</div>
+            <p id="final-feedback" class="feedback-text">כל הכבוד!</p>
+            <button id="restart-btn" class="primary-btn">נסה שוב</button>
+        </div>
     </div>
 
+    <!-- קישור לקובץ הקוד - חייב להיות בתחתית העמוד -->
+    <script src="script.js"></script>
 </body>
 </html>
