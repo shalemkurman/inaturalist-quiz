@@ -5,7 +5,7 @@ let quizQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 let selectedLanguage = 'he';
-let currentPlaceId = '';
+let currentPlaceId = '6803';
 let currentObservationUrl = '';
 
 // DOM Elements
@@ -59,7 +59,6 @@ async function safeFetchJson(url) {
 let taxonTimeout = null;
 taxonInput.addEventListener('input', (e) => {
     clearTimeout(taxonTimeout);
-    taxonIdInput.value = ''; // Reset hidden ID if text changes
     const query = e.target.value.trim();
     if (query.length < 2) {
         taxonResults.classList.add('hidden');
@@ -108,13 +107,13 @@ function renderTaxonAutocomplete(results) {
     taxonResults.classList.remove('hidden');
 }
 
+
 // ==========================================
 // 2. LOCATION AUTOCOMPLETE (iNaturalist API)
 // ==========================================
 let placeTimeout = null;
 placeInput.addEventListener('input', (e) => {
     clearTimeout(placeTimeout);
-    placeIdInput.value = ''; // Reset hidden ID if text changes
     const query = e.target.value.trim();
     if (query.length < 2) {
         placeResults.classList.add('hidden');
@@ -170,21 +169,15 @@ document.addEventListener('click', (e) => {
     }
 });
 
+
 // ==========================================
 // 3. QUIZ GENERATION ENGINE
 // ==========================================
 setupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    const taxonId = taxonIdInput.value.trim();
-    currentPlaceId = placeIdInput.value.trim();
+    const taxonId = taxonIdInput.value || '47157';
+    currentPlaceId = placeIdInput.value || '6803';
     selectedLanguage = document.getElementById('lang-select').value;
-
-    // Validation: Verify that taxon and location were selected from autocomplete
-    if (!taxonId || !currentPlaceId) {
-        alert('אנא בחר קבוצה/מין ומיקום מתוך הרשימה המוצעת שנפתחת בזמן ההקלדה.');
-        return;
-    }
 
     startBtn.disabled = true;
     loadingSpinner.classList.remove('hidden');
@@ -295,6 +288,7 @@ async function buildQuizQuestions(count, placeId) {
     }
 }
 
+
 // ==========================================
 // 4. RANDOM OBSERVATION PHOTO FETCHING
 // ==========================================
@@ -330,6 +324,7 @@ async function getRandomObservationPhoto(taxonId, placeId) {
     }
     return null;
 }
+
 
 // ==========================================
 // 5. QUIZ DISPLAY & INTERACTION
@@ -493,6 +488,10 @@ document.getElementById('restart-same-btn').addEventListener('click', async () =
     startQuiz();
 });
 
+document.getElementById('change-settings-btn').addEventListener('click', () => {
+    resultsScreen.classList.add('hidden');
+    setupScreen.classList.remove('hidden');
+});
 document.getElementById('change-settings-btn').addEventListener('click', () => {
     resultsScreen.classList.add('hidden');
     setupScreen.classList.remove('hidden');
