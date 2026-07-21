@@ -7,6 +7,7 @@ let score = 0;
 let selectedLanguage = 'he';
 let currentPlaceId = '6803';
 let currentObservationUrl = '';
+let selectedMonths = '';
 
 // DOM Elements
 const setupScreen = document.getElementById('setup-screen');
@@ -178,6 +179,9 @@ setupForm.addEventListener('submit', async (e) => {
     const taxonId = taxonIdInput.value || '47157';
     currentPlaceId = placeIdInput.value || '6803';
     selectedLanguage = document.getElementById('lang-select').value;
+    selectedMonths = Array.from(document.querySelectorAll('input[name="month"]:checked'))
+        .map(cb => cb.value)
+        .join(',');
 
     startBtn.disabled = true;
     loadingSpinner.classList.remove('hidden');
@@ -215,7 +219,11 @@ function resetSetupUI() {
 
 // Pre-fetch all species present in target region
 async function fetchRegionalSpecies(taxonId, placeId) {
-    const url = `https://api.inaturalist.org/v1/observations/species_counts?taxon_id=${taxonId}&place_id=${placeId}&per_page=200&quality_grade=research`;
+    let url = `https://api.inaturalist.org/v1/observations/species_counts?taxon_id=${taxonId}&place_id=${placeId}&per_page=200&quality_grade=research`;
+    
+    if (selectedMonths) {
+        url += `&month=${selectedMonths}`;
+    }
     const data = await safeFetchJson(url);
 
     regionalSpeciesPool = (data.results || [])
