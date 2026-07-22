@@ -5,7 +5,7 @@ let quizQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 let selectedLanguage = 'he';
-let currentPlaceId = '6803';
+let currentPlaceId = '';
 let currentObservationUrl = '';
 let selectedMonths = '';
 
