@@ -474,13 +474,13 @@ function showResults() {
     const feedbackEl = document.getElementById('performance-feedback');
 
     if (pct >= 90) {
-        feedbackEl.textContent = 'מדהים! אתה מומחה מוחלט לזיהוי מינים באזור זה!';
+        feedbackEl.textContent = 'יא טרקטור מירוץ מכונת המכונות';
     } else if (pct >= 70) {
-        feedbackEl.textContent = 'עבודה מעולה! שליטה גבוהה ביותר במינים המקומיים.';
+        feedbackEl.textContent = 'יפה יפה';
     } else if (pct >= 50) {
-        feedbackEl.textContent = 'תוצאה יפה מאוד! בסיס מצוין לזיהוי בשטח.';
+        feedbackEl.textContent = 'יש עם מה לעבוד';
     } else {
-        feedbackEl.textContent = 'ניסיון טוב! זיהוי שטח דורש תרגול, נסה שוב!';
+        feedbackEl.textContent = 'meh, תעשה עוד אחד';
     }
 }
 
