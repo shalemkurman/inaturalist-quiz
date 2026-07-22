@@ -176,8 +176,8 @@ document.addEventListener('click', (e) => {
 // ==========================================
 setupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const taxonId = taxonIdInput.value || '47157';
-    currentPlaceId = placeIdInput.value || '6803';
+    const taxonId = taxonIdInput.value || '';
+    currentPlaceId = placeIdInput.value || '';
     selectedLanguage = document.getElementById('lang-select').value;
     selectedMonths = Array.from(document.querySelectorAll('input[name="month"]:checked'))
         .map(cb => cb.value)
