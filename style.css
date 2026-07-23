@@ -2,16 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --bg-main: #0f172a;
-    --bg-card: #1e293b;
-    --bg-input: #0f172a;
-    --bg-hover: #334155;
-    --emerald-primary: #10b981;
-    --emerald-hover: #059669;
+    --bg-main: #5d7060;
+    --bg-card: #203026;
+    --bg-input: #102617;
+    --bg-hover: #3b5e45;
+    --emerald-primary: #eddbda;
+    --emerald-hover: #824945;
     --rose-error: #e11d48;
     --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --border-color: #334155;
+    --text-muted: #8cab9b;
+    --border-color: #335536;
     --radius: 16px;
 }
 
